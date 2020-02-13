@@ -1,0 +1,69 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <span class="nav-bar-title">
+                <span ng-click="logout()" class="navbar-brand logout">
+                    <i class="fa fa-sign-out" aria-hidden="true"></i> Logout
+                </span>
+            </span>
+        </div>
+    </div>
+    <div class="container">
+        <div class="card">
+            <div class="card reports-container" id="scroll-bar" ng-show="!isInsert && !isUpdate">
+                <h2 class="list-title">Manage devices for {{Name}} </h2> <br />
+                <ul class="list-group">
+                    <li ng-repeat="pair in devices track by $index" class="list-group-item">
+                        <div ng-click="isCollapsed = !isCollapsed" role="button">
+                            <span class="item-icon"> <i class="fa fa-arrow-right" aria-hidden="true"></i> </span>
+                            <div class="report-info-location">{{pair[0].Name}}</div>
+                            <div class="report-info-location">{{pair[1]}}</div>
+                        </div>
+                        <div ng-show="!isCollapsed">
+                            <ul class="list-group">
+                                <li class="list-group-item">Manufacturer: {{getOneFromList(pair[0].Manufacturer, manufacturers).Name}}</li>
+                                <li class="list-group-item">Type: {{getOneFromList(pair[0].Type, types).Name}}</li>
+                                <li class="list-group-item">
+                                    <div>
+                                        <div class="report-info-location">Operating System: {{getOneFromList(pair[0].OS, operatingSystems).Name}}</div>
+                                        <div class="report-info-location">Version: {{getOneFromList(pair[0].OS, operatingSystems).Version}}</div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">Processor: {{getOneFromList(pair[0].Processor, processors).Name}}</li>
+                                <li class="list-group-item">RAM amount: {{pair[0].RAM}}</li>
+                                <li class="list-group-item">
+                                    <div class="btn" ng-show="canAssign($index)" ng-click="assign(pair[0].Id)" role="button">Assign</div>
+                                    <div class="btn" ng-show="canUnassign($index)" ng-click="unassign(pair[0].Id)" role="button">Unassign</div>
+                                    <div class="btn" ng-click="updateDevice(pair[0].Id)" role="button">Update</div>
+                                    <div class="btn" ng-show="canDelete(pair[1])" ng-click="delete(pair[0].Id)" role="button">Delete</div>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <button ng-click="insertDevice()" class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Add new device</button>
+        </div>
+    </div>
+
+    <div id="container" class="card card-container" ng-show="isInsert || isUpdate">
+        <form class="form-signin" ng-show="!login">
+            <input ng-model="deviceName" ng-class="{'form-control-wrong-data' : wrongData}" type="text" class="form-control" placeholder="Name" autofocus>
+            <select ng-model="selectedManufacturer" ng-class="{'form-control-wrong-data' : wrongData}" class="form-control" ng-options="x.Name for x in manufacturers"></select>
+            <select ng-model="selectedType" ng-class="{'form-control-wrong-data' : wrongData}" class="form-control" ng-options="x.Name for x in types"></select>
+            <select ng-model="selectedOS" ng-class="{'form-control-wrong-data' : wrongData}" class="form-control" ng-options="x.Name + ' ' + x.Version for x in operatingSystems"></select>
+            <select ng-model="selectedProcessor" ng-class="{'form-control-wrong-data' : wrongData}" class="form-control" ng-options="x.Name for x in processors"></select>
+            <input ng-model="ram" ng-class="{'form-control-wrong-data' : wrongData}" type="number" id="inputRAM" class="form-control" placeholder="RAM">
+            <button ng-click="insert()" ng-show="isInsert" class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Add device</button>
+            <button ng-click="update()" ng-show="isUpdate" class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Update device</button>
+        </form>
+    </div>
+
+</body>
+</html>

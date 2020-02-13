@@ -1,0 +1,40 @@
+﻿.reports-title {
+    font-size: 18px;
+    font-weight: lighter;
+    display: inline;
+    border: 1px solid white;
+    border-radius: 4px;
+    padding: 5px;
+}
+
+.reports-container.card {
+    max-width: 600px;
+    padding-top: 40px;
+    text-align: center;
+    max-height: 460px;
+    overflow-y: scroll;
+}
+
+.reports-title:hover {
+    border: 1px solid #5499C7;
+    cursor: pointer;
+}
+
+.outlined {
+    border: 1px solid #5499C7;
+}
+
+.report-info-location {
+    display: inline-block;
+    width: 130px;
+}
+
+.report-info-timestamp {
+    display: inline-block;
+    width: 200px;
+}
+
+.report-info-type {
+    display: inline-block;
+    width: 50px;
+}
